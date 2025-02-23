@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Webpage</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Accessible Webpage</h1>
+        <nav aria-label="Main Navigation">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="about" tabindex="0">
+            <h2>About Us</h2>
+            <p>We are committed to creating accessible web experiences for everyone.</p>
+        </section>
+        
+        <section id="services" tabindex="0">
+            <h2>Our Services</h2>
+            <p>We offer a range of services designed with accessibility in mind.</p>
+        </section>
+        
+        <section id="contact" tabindex="0">
+            <h2>Contact Us</h2>
+            <form aria-labelledby="contact-form">
+                <h3 id="contact-form">Get in Touch</h3>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Accessible Webpage. All rights reserved.</p>
+    </footer>
+    
+    <script src="scripts/main.js"></script>
+</body>
+</html>
+
+git remote add origin https://github.com/<chenandrew405>/<Aviation-Unrealisitc>.git
+git branch -M main
+git push -u origin main
+```
+```css  
