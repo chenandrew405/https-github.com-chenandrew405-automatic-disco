@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Quiz - Quizonary</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Study Quiz</h1>
+    </header>
+
+    <div class="background-container">
+        <div id="quiz-content">
+            <div id="question-container">
+                <h3 id="question-text">Loading question...</h3>
+                <div id="answers-container"></div>
+            </div>
+            <div class="quiz-controls">
+                <button id="next-btn" class="study-btn" disabled>Next Question</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuiz;
+        let currentQuestionIndex = 0;
+
+        // Load quiz data when page loads
+        window.onload = function() {
+            const quizIndex = localStorage.getItem('studyQuizIndex');
+            const savedQuizzes = JSON.parse(localStorage.getItem('quizzes') || '[]');
+            
+            if (savedQuizzes && savedQuizzes[quizIndex]) {
+                currentQuiz = savedQuizzes[quizIndex];
+                showQuestion();
+            } else {
+                document.getElementById('question-text').textContent = 'No quiz found';
+            }
+        }
+
+        function studyQuiz(index) {
+            localStorage.setItem('studyQuizIndex', index);
+            window.location.href = 'StudyQuiz.html';
+        }
+
+        function showQuestion() {
+            if (!currentQuiz || !currentQuiz.questions) return;
+            
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const questionText = document.getElementById('question-text');
+            const answersContainer = document.getElementById('answers-container');
+            
+            // Clear previous content
+            questionText.textContent = question.question;
+            answersContainer.innerHTML = '';
+            
+            // Create answer buttons
+            question.answers.forEach((answer, index) => {
+                if (answer && answer.trim()) { // Only create button if answer exists
+                    const button = document.createElement('button');
+                    button.className = 'answer-btn';
+                    button.textContent = answer;
+                    button.onclick = () => checkAnswer(index + 1);
+                    answersContainer.appendChild(button);
+                }
+            });
+            
+            // Reset next button
+            document.getElementById('next-btn').disabled = true;
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const buttons = document.querySelectorAll('.answer-btn');
+            
+            buttons.forEach((button, index) => {
+                button.disabled = true;
+                if ((index + 1) === parseInt(question.correctAnswer)) {
+                    button.classList.add('correct');
+                    if (selectedAnswer === (index + 1)) {
+                        document.getElementById('next-btn').disabled = false;
+                    }
+                } else if ((index + 1) === selectedAnswer) {
+                    button.classList.add('incorrect');
+                }
+            });
+        }
+
+        // Add event listener for next button
+        document.getElementById('next-btn').onclick = function() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= currentQuiz.questions.length) {
+                // Instead of redirecting, reset the index and start over
+                currentQuestionIndex = 0;
+                const continueStudying = confirm('Quiz completed! Would you like to continue studying?');
+                if (continueStudying) {
+                    showQuestion();
+                } else {
+                    window.location.href = 'CreateQuiz.html';
+                }
+            } else {
+                showQuestion();
+            }
+        }
+
+        function addCard() {
+            const term = prompt('Enter the term:');
+            if (term) {
+                const definition = prompt('Enter the definition:');
+                if (definition) {
+                    // Add to cards array
+                    cards.push({ term, definition });
+                    
+                    // Create new flashcard element
+                    const flashcardContainer = document.querySelector('.flashcard-container');
+                    const newCard = document.createElement('div');
+                    newCard.className = 'flashcard';
+                    newCard.innerHTML = `
+                        <div class="front">${term}</div>
+                        <div class="back">${definition}</div>
+                    `;
+
+                    // Add click listener for flipping
+                    newCard.addEventListener('click', function() {
+                        this.classList.toggle('flipped');
+                    });
+                    
+                    // Insert before the controls div
+                    const controls = document.querySelector('.controls');
+                    flashcardContainer.insertBefore(newCard, controls);
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .background-container {
+            background-color: #6a9e45;
+            margin: 180px 20px 20px 20px;
+            padding: 20px;
+            border-radius: 10px;
+            min-height: calc(100vh - 280px);
+        }
+
+        #quiz-content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #question-text {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #124122;
+        }
+
+        .answer-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: white;
+            border: 2px solid #124122;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .answer-btn:hover {
+            background-color: #e8f5e9;
+        }
+
+        .answer-btn.correct {
+            background-color: #81c784;
+            color: white;
+            border-color: #81c784;
+        }
+
+        .answer-btn.incorrect {
+            background-color: #e57373;
+            color: white;
+            border-color: #e57373;
+        }
+
+        #next-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 30px;
+            background-color: #124122;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #next-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</body>
+</html>

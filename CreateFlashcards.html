@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Flashcards - Quizonary</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 40px;
+        }
+
+        header {
+            background-color: #124122;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .new-set-btn {
+            color: #ffffff;
+            text-align: center;
+            font-size: 20px;  
+            width: 15%;
+            padding: 10px;  
+            background-color: rgb(28, 104, 60);
+            border-radius: 10px;
+            margin-left: auto;
+            margin-right: 42px;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            position: absolute;
+            right: 20px;
+            top: 130px;
+            transition: background-color 0.3s ease;
+        }
+
+        .new-set-btn:hover {
+            background-color: rgb(34, 127, 73);
+        }
+
+        .background-container {
+            background-color: #8fd49b;
+            margin: 180px 20px 20px 20px;
+            padding: 20px;
+            border-radius: 10px;
+            min-height: calc(100vh - 280px);
+        }
+
+        .flashcard-set {
+            background: white;
+            padding: 20px;
+            margin: 0 0 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .flashcard-set h3 {
+            color: #124122;
+            margin-bottom: 10px;
+        }
+
+        .flashcard-details {
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .flashcard-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .flashcard-actions button {
+            background-color: rgb(28, 104, 60);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .flashcard-actions button:nth-child(2) {
+            background-color: #007bff;
+        }
+
+        .flashcard-actions button:last-child {
+            background-color: #dc3545;
+        }
+
+        .signout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Flashcards</h1>
+        <button onclick="window.location.href='Flashcards.html'" class="new-set-btn">New Set</button>
+        <button onclick="handleSignout()" class="signout-btn">Sign Out</button>
+    </header>
+
+    <div class="background-container" id="flashcard-sets">
+        <!-- Flashcard sets will be displayed here -->
+    </div>
+
+    <script>
+        window.onload = function() {
+            displayFlashcardSets();
+            
+            document.querySelector('.signout-btn').addEventListener('click', function() {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'Login.html';
+            });
+        }
+
+        function displayFlashcardSets() {
+            const container = document.getElementById('flashcard-sets');
+            const sets = JSON.parse(localStorage.getItem('flashcardSets') || '[]');
+
+            if (sets.length === 0) {
+                container.innerHTML = '<p>No flashcard sets yet. Create one!</p>';
+                return;
+            }
+
+            container.innerHTML = sets.map((set, index) => `
+                <div class="flashcard-set">
+                    <h3>${set.name}</h3>
+                    <div class="flashcard-details">
+                        ${set.cards.length} cards
+                    </div>
+                    <div class="flashcard-actions">
+                        <button onclick="studySet(${index})">Study</button>
+                        <button onclick="editSet(${index})">Edit</button>
+                        <button onclick="deleteSet(${index})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function studySet(index) {
+            localStorage.setItem('studySetIndex', index);
+            window.location.href = 'StudyFlashcards.html'; // Make sure this matches exactly
+        }
+
+        function editSet(index) {
+            localStorage.setItem('editFlashcardSet', index);
+            window.location.href = 'Flashcards.html';
+        }
+
+        function deleteSet(index) {
+            if (confirm('Are you sure you want to delete this flashcard set?')) {
+                const sets = JSON.parse(localStorage.getItem('flashcardSets') || '[]');
+                sets.splice(index, 1);
+                localStorage.setItem('flashcardSets', JSON.stringify(sets));
+                displayFlashcardSets();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #6a9e45;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .page-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 100%;
+            background-color: #124122;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        .sidebar a:hover {
+            background-color: #1a6130;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        .signup-container {
+            width: 500px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .signup-container h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #124122;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 35px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.2em;
+            border: 3px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #1a6130;
+            outline: none;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.4em;
+            background-color: #1a6130;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .signup-btn:hover {
+            background-color: #2a7540;
+            transform: scale(1.02);
+        }
+
+        .captcha-container {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .captcha-text {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            letter-spacing: 5px;
+            color: #124122;
+            font-weight: bold;
+        }
+
+        #refreshCaptcha {
+            background: #124122;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <a href="Login.html">Log in</a>
+            <a href="SignUp.html">Sign Up</a>
+            <a href="about.html">About</a>
+            <a href="HowTo.html">How To Create A Quiz</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="signup-container">
+                <h2>Sign Up for Quizonary</h2>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="captcha">Security Check:</label>
+                        <div class="captcha-container">
+                            <span id="captchaText" class="captcha-text"></span>
+                            <button type="button" id="refreshCaptcha" onclick="generateCaptcha()">↻</button>
+                        </div>
+                        <input type="text" id="captchaInput" required>
+                    </div>
+                    <p id="errorMessage" style="color: red; margin-top: 10px;"></p>
+                    <button type="submit" class="signup-btn">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        let captchaValue = '';
+
+        function generateCaptcha() {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            captchaValue = '';
+            for (let i = 0; i < 6; i++) {
+                captchaValue += chars[Math.floor(Math.random() * chars.length)];
+            }
+            document.getElementById('captchaText').textContent = captchaValue;
+        }
+
+        // Generate captcha when page loads
+        window.onload = generateCaptcha;
+
+        function handleSignup(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const captchaInput = document.getElementById('captchaInput').value;
+
+            if (captchaInput !== captchaValue) {
+                alert('Incorrect CAPTCHA. Please try again.');
+                generateCaptcha();
+                document.getElementById('captchaInput').value = '';
+                return;
+            }
+
+            // Get existing users from localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Check if username already exists
+            if (users.some(user => user.username.toLowerCase() === username.toLowerCase())) {
+                alert('Account already exists. Please choose a different username.');
+                return;
+            }
+            
+            // Create new user object
+            const newUser = {
+                username: username,
+                password: password,
+                quizzes: []
+            };
+            
+            // Add new user to array and save
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            alert('Account created successfully!');
+            window.location.href = 'Login.html';
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', handleSignup);
+    </script>
+</body>
+</html>

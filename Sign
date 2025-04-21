@@ -1,0 +1,63 @@
+Up.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Quizonary</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Quizonary</h1>
+    </header>
+    <div class="background-container">
+        <div class="form-container">
+            <h2>Sign Up</h2>
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function handleSignup(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Create user object
+            const user = {
+                username: username,
+                password: password,
+                quizzes: []
+            };
+
+            // Get existing users or create empty array
+            let users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Check if username already exists
+            if (users.some(u => u.username === username)) {
+                alert('Username already exists. Please choose another.');
+                return;
+            }
+
+            // Add new user
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            alert('Account created successfully!');
+            window.location.href = 'Login.html';
+        }
+    </script>
+</body>
+</html>

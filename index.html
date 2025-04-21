@@ -3,57 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accessible Webpage</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <title>Quizonary</title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #124122;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+        }
+        p {
+            font-size: 30px;
+            margin: 20px 0;
+            text-align: left;
+            color: #000000;
+        }
+        h2 {
+            font-size: 20px;
+            margin: 10px 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        nav ul {
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            height: calc(100% - 98px); /* Subtract header height */
+            width: 200px;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 100px; /* Position it below the header */
+            background-color: #277b43;
+            padding-top: 20px;
+            margin-top: 0; /* Remove margin-top since we're using top positioning */
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: rgb(255, 255, 255);
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #1a602f;
+        }
+
+        /* Adjust main content to make room for sidebar */
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        /* Header nav specific styles */
+        .header-nav {
+            text-align: right;
+            padding-right: 20px;
+        }
+        
+        .header-nav ul li {
+            display: inline;
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to Our Accessible Webpage</h1>
-        <nav aria-label="Main Navigation">
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <h1>Quizonary</h1>
+        <h2>Quizonary LTD. Respected Trademark All Rights Reserved</h2>
     </header>
-    
-    <main>
-        <section id="about" tabindex="0">
-            <h2>About Us</h2>
-            <p>We are committed to creating accessible web experiences for everyone.</p>
-        </section>
-        
-        <section id="services" tabindex="0">
-            <h2>Our Services</h2>
-            <p>We offer a range of services designed with accessibility in mind.</p>
-        </section>
-        
-        <section id="contact" tabindex="0">
-            <h2>Contact Us</h2>
-            <form aria-labelledby="contact-form">
-                <h3 id="contact-form">Get in Touch</h3>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                
-                <button type="submit">Submit</button>
-            </form>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2023 Accessible Webpage. All rights reserved.</p>
-    </footer>
-    
-    <script src="scripts/main.js"></script>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <a href="Login.html">Log in</a>
+        <a href="SignUp.html">Sign Up</a>
+        <a href="about.html">About</a>
+        <a href="HowTo.html">How To Create A Quiz</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <p>Welcome to Quizonary!</p>
+        <p>Test your knowledge.</p>
+        <p>Join us today and start quizzing!</p>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Add this at the top of your script.js or in a script tag
+        window.onload = function() {
+            // Check if user is logged in
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                // If logged in, show CreateQuiz link instead of Login/Signup
+                document.querySelector('.sidebar').innerHTML = `
+                    <a href="CreateQuiz.html">My Quizzes</a>
+                    <a href="about.html">About</a>
+                    <a href="HowTo.html">How To Create A Quiz</a>
+                    <a href="#" onclick="handleSignout(event)">Sign Out</a>
+                `;
+            }
+        }
+
+        function handleSignout(event) {
+            event.preventDefault();
+            localStorage.removeItem('currentUser');
+            window.location.href = 'Login.html';
+        }
+    </script>
 </body>
 </html>
-
-git remote add origin https://github.com/<chenandrew405>/<Aviation-Unrealisitc>.git
-git branch -M main
-git push -u origin main
-```
-```css  

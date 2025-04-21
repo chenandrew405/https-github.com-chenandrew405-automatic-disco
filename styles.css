@@ -1,0 +1,95 @@
+* {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background-color: #6a9e45;
+    font-size: 30px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+header {
+    background-color: #124122;
+    color: white;
+    padding: 5px 0 15px 0;  /* Increased bottom padding */
+    text-align: center;
+    width: 100%;
+    height: 60px;  /* Increased height to accommodate padding */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+header h1 {
+    margin: 0;
+    padding: 5px 0;
+    font-size: 2em;
+    color: white;
+    line-height: 1;
+    text-transform: capitalize;
+}
+
+/* Remove any h2 in header if present */
+header h2 {
+    display: none;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    height: calc(100vh - 60px);
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 60px;  /* Match header height */
+    background-color: #277b43;
+    padding-top: 15px;
+}
+
+.sidebar a {
+    padding: 15px 25px;  /* Reduced top/bottom padding */
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #1a602f;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 200px;
+    margin-top: 60px;
+    padding: 20px;
+    background-color: white;
+    min-height: calc(100vh - 80px);
+    text-align: left; /* Ensure main content is left-aligned */
+    color: black;
+}
+
+.main-content h1, .main-content h2 {
+    color: black;
+    text-align: center; /* Keep headers centered */
+}
+
+.main-content p, 
+.main-content ol,
+.main-content ul,
+.main-content a {
+    text-align: left;
+    margin-bottom: 1em;
+    color: black;
+}
+
+.instructions {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}

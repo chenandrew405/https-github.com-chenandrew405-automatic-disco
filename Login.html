@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #6a9e45;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .page-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 100%;
+            background-color: #124122;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        .sidebar a:hover {
+            background-color: #1a6130;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 500px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-container h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #124122;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 35px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.2em;
+            border: 3px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #1a6130;
+            outline: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.4em;
+            background-color: #1a6130;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .login-btn:hover {
+            background-color: #2a7540;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <a href="Login.html">Log in</a>
+            <a href="SignUp.html">Sign Up</a>
+            <a href="about.html">About</a>
+            <a href="HowTo.html">How To Create A Quiz</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="login-container">
+                <h2>Login to Quizonary</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <p id="errorMessage" style="color: red; margin-top: 10px;"></p>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Find matching user
+            const user = users.find(u => 
+                u.username.toLowerCase() === username.toLowerCase() && 
+                u.password === password
+            );
+            
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                window.location.href = 'Welcome.html'; // Changed from CreateQuiz.html to Welcome.html
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', handleLogin);
+    </script>
+</body>
+</html>

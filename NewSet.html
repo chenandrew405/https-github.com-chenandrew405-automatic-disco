@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Set - Quizonary</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Create New Set</h1>
+        <button onclick="goBack()" class="back-btn">Back to Sets</button>
+    </header>
+    <h1>Title:</h1>
+    <div class="background-container">
+        <div class="quiz-form">
+            <h1 class="form-title">Title:</h1>
+            <div class="form-group">
+                <input type="text" id="setTitle" placeholder="Enter your quiz title">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" placeholder="Describe your quiz"></textarea>
+            </div>
+            <h1 class="Build">Questions:</h1>
+            <div id="questions-container">
+                <div class="question-block">
+                    <input type="text" class="question" placeholder="Enter your question">
+                    <div class="answers">
+                        <input type="text" class="answer" placeholder="Answer option 1">
+                        <input type="text" class="answer" placeholder="Answer option 2">
+                        <input type="text" class="answer" placeholder="Answer option 3">
+                        <input type="text" class="answer" placeholder="Answer option 4">
+                    </div>
+                    <select class="correct-answer">
+                        <option value="">Select correct answer</option>
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                        <option value="4">Option 4</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button id="add-question" class="new-set-btn">Add Question</button>
+                <button id="save-quiz" class="new-set-btn">Save Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .quiz-form {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 35px;
+            margin-bottom: 10px;
+            margin-top: 20px;
+            text-align: left;
+            padding: 0;
+            background: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        h1 {
+            color: #ffffff;
+            font-size: 35px;
+            margin-bottom: 10px;
+            margin-top: 20px;
+            text-align: left;
+            padding: 0;
+            background: none;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        input[type="text"], textarea {
+            width: 100%; /* Keep description box full width */
+            padding: 15px; /* Reduced padding */
+            margin-right: 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        textarea#description {
+            width: 104%;
+            height: 100px;  /* Fixed height */
+            padding: 15px;
+            margin-right: 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            resize: none;  /* Prevents resizing */
+            position: relative;  /* Makes it fixed in place */
+            box-sizing: border-box;  /* Includes padding in width calculation */
+        }
+        header {
+            background-color: #124122;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            font-weight: bold;
+            font-size: 35px;
+        }
+
+        header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 35px;
+            text-align: center;
+            color: white;
+        }
+
+        .background-container {
+            margin-top: 120px; /* Increased to account for fixed header */
+        }
+
+        #setTitle {
+            margin-top: 10px;
+        }
+
+        .question-block {
+            background: white;
+            padding: 20px 40px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: calc(100% - 40px);
+            max-width: 750px;
+            margin: 0 auto 20px;
+            margin-left: 0; /* Changed from 20px to 0 */
+        }
+
+        .answers {
+            margin: 10px auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .question {
+            width: 60%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #124122;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-left: -15px; /* Added to move question input left */
+        }
+
+        .answer, .correct-answer {
+            width: 60%; /* Reduced width of input fields */
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #124122;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .correct-answer {
+            width: 30%; /* Make dropdown smaller */
+            margin: 15px auto; /* Center the dropdown */
+            display: block;
+        }
+
+        #add-question {
+            margin-right: 10px;
+        }
+
+        .new-set-btn {
+            display: inline-block;
+            position: relative;
+            width: 15%;
+            height: 35px;
+            margin: 0 10px;  /* Changed from margin-left */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-right: -20px;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #d21c1c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #601a1a;
+        }
+    </style>
+
+    <script>
+        document.querySelector('.question-block').innerHTML = `
+            <input type="text" class="question" placeholder="Enter your question">
+            <div class="answers">
+                <input type="text" class="answer" placeholder="Answer option 1">
+                <input type="text" class="answer" placeholder="Answer option 2">
+                <input type="text" class="answer" placeholder="Answer option 3">
+                <input type="text" class="answer" placeholder="Answer option 4">
+            </div>
+            <select class="correct-answer">
+                <option value="">Select correct answer</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+                <option value="4">Option 4</option>
+            </select>
+        `;
+
+        document.getElementById('add-question').addEventListener('click', function() {
+            const container = document.getElementById('questions-container');
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            questionBlock.innerHTML = `
+                <input type="text" class="question" placeholder="Enter your question">
+                <div class="answers">
+                    <input type="text" class="answer" placeholder="Answer option 1">
+                    <input type="text" class="answer" placeholder="Answer option 2">
+                    <input type="text" class="answer" placeholder="Answer option 3">
+                    <input type="text" class="answer" placeholder="Answer option 4">
+                </div>
+                <select class="correct-answer">
+                    <option value="">Select correct answer</option>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                    <option value="4">Option 4</option>
+                </select>
+            `;
+            container.appendChild(questionBlock);
+        });
+
+        document.getElementById('save-quiz').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('setTitle').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const questions = document.querySelectorAll('.question-block');
+            
+            // Validation checks
+            if (!title) {
+                alert('Please enter a quiz title');
+                return;
+            }
+
+            if (!description) {
+                alert('Please enter a quiz description');
+                return;
+            }
+
+            let isValid = true;
+            let quizData = {
+                title: title,
+                description: description,
+                questions: []
+            };
+
+            questions.forEach((block, index) => {
+                const question = block.querySelector('.question').value.trim();
+                const answers = Array.from(block.querySelectorAll('.answer'))
+                    .map(input => input.value.trim());
+                const correctAnswer = block.querySelector('.correct-answer').value;
+
+                if (!question) {
+                    alert(`Please enter question ${index + 1}`);
+                    isValid = false;
+                    return;
+                }
+
+                if (answers.some(answer => !answer)) {
+                    alert(`Please fill in all answers for question ${index + 1}`);
+                    isValid = false;
+                    return;
+                }
+
+                if (!correctAnswer) {
+                    alert(`Please select the correct answer for question ${index + 1}`);
+                    isValid = false;
+                    return;
+                }
+
+                quizData.questions.push({
+                    question: question,
+                    answers: answers,
+                    correctAnswer: correctAnswer
+                });
+            });
+
+            if (!isValid) {
+                return;
+            }
+
+            // If all validation passes, save the quiz
+            let savedQuizzes = JSON.parse(localStorage.getItem('quizzes') || '[]');
+            savedQuizzes.push(quizData);
+            localStorage.setItem('quizzes', JSON.stringify(savedQuizzes));
+
+            alert('Quiz saved successfully!');
+            window.location.href = 'CreateQuiz.html';
+        });
+
+        function goBack() {
+            window.location.href = 'CreateQuiz.html';
+        }
+    </script>
+</body>
+</html>
